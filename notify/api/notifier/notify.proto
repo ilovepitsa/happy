@@ -7,17 +7,27 @@ option go_package = "github.com/ilovepitsa/happy/notify/api/notifier";
 package notifier;
 
 message Notification {
+    string NotificationText = 1;
+    string Date = 2;
+}
+
+message Follow {
     int32 subscriberID = 1;
     int32 birthdayBoyId = 2;
     string notifyBefore = 3;
 }
 
+message User {
+    int32 UserId = 1;
+}
+
 
 message Nothing {
     bool dummy = 1;
-  }
+}
 
-//переделать все в соответствии с видео
+
 service Notifier {
-    rpc Create(Notification) returns (Nothing) {}
+    rpc Create(Follow) returns (Nothing) {}
+    rpc GetUserNotifications(User) returns (stream Notification) {}
 }
