@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+//protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative api/notifier/notify.proto 
+
+option go_package = "github.com/ilovepitsa/happy/notify/api/notifier";
+
+package notifier;
+
+message Notification {
+    string NotificationText = 1;
+    string Date = 2;
+}
+
+message Follow {
+    int32 subscriberID = 1;
+    int32 birthdayBoyId = 2;
+    string notifyBefore = 3;
+}
+
+message User {
+    int32 UserId = 1;
+}
+
+
+message Nothing {
+    bool dummy = 1;
+}
+
+
+service Notifier {
+    rpc Create(Follow) returns (Nothing) {}
+    rpc GetUserNotifications(User) returns (stream Notification) {}
+}
