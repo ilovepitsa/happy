@@ -27,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NotifierClient interface {
-	Create(ctx context.Context, in *Follow, opts ...grpc.CallOption) (*Nothing, error)
+	Create(ctx context.Context, in *NotificationInfo, opts ...grpc.CallOption) (*Result, error)
 	GetUserNotifications(ctx context.Context, in *User, opts ...grpc.CallOption) (Notifier_GetUserNotificationsClient, error)
 }
 
@@ -39,9 +39,9 @@ func NewNotifierClient(cc grpc.ClientConnInterface) NotifierClient {
 	return &notifierClient{cc}
 }
 
-func (c *notifierClient) Create(ctx context.Context, in *Follow, opts ...grpc.CallOption) (*Nothing, error) {
+func (c *notifierClient) Create(ctx context.Context, in *NotificationInfo, opts ...grpc.CallOption) (*Result, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Nothing)
+	out := new(Result)
 	err := c.cc.Invoke(ctx, Notifier_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -86,7 +86,7 @@ func (x *notifierGetUserNotificationsClient) Recv() (*Notification, error) {
 // All implementations must embed UnimplementedNotifierServer
 // for forward compatibility
 type NotifierServer interface {
-	Create(context.Context, *Follow) (*Nothing, error)
+	Create(context.Context, *NotificationInfo) (*Result, error)
 	GetUserNotifications(*User, Notifier_GetUserNotificationsServer) error
 	mustEmbedUnimplementedNotifierServer()
 }
@@ -95,7 +95,7 @@ type NotifierServer interface {
 type UnimplementedNotifierServer struct {
 }
 
-func (UnimplementedNotifierServer) Create(context.Context, *Follow) (*Nothing, error) {
+func (UnimplementedNotifierServer) Create(context.Context, *NotificationInfo) (*Result, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 func (UnimplementedNotifierServer) GetUserNotifications(*User, Notifier_GetUserNotificationsServer) error {
@@ -115,7 +115,7 @@ func RegisterNotifierServer(s grpc.ServiceRegistrar, srv NotifierServer) {
 }
 
 func _Notifier_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Follow)
+	in := new(NotificationInfo)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func _Notifier_Create_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: Notifier_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotifierServer).Create(ctx, req.(*Follow))
+		return srv.(NotifierServer).Create(ctx, req.(*NotificationInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }
