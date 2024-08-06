@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"path"
 
 	"github.com/ilyakaznacheev/cleanenv"
@@ -45,4 +46,8 @@ func NewConfig(cnfPath string) (*Config, error) {
 	}
 	return config, nil
 
+}
+
+func (p *Postgres) FormatDSN() string {
+	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", p.User, p.Password, p.Host, p.Port, p.Db)
 }

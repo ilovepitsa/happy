@@ -17,10 +17,6 @@ func Run(configPath string) error {
 	}
 	SetLogrusParams(cfg)
 
-	if err != nil {
-		return err
-	}
-
 	var opts []grpc.ServerOption
 
 	grpcServer := grpc.NewServer(opts...)

@@ -1,0 +1,18 @@
+app:
+  name: "notifier"
+
+network:
+  host: "0.0.0.0"
+  port: "8080"
+
+logger:
+  json_enable: false
+  level: "debug"
+  report: false
+
+postgres:
+  host: "postgresDB"
+  port: "5432"
+  user: "postgres"
+  password: "postgres"
+  db: "happy"
