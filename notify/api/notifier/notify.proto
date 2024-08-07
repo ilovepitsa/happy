@@ -8,10 +8,9 @@ package notifier;
 
 message NotificationInfo {
     User    user            = 1;
-    int32   type            = 2;
-    User    target          = 3;
-    string  date            = 4;
-    string  notifyBefore    = 5;
+    User    target          = 2;
+    string  date            = 3;
+    string  notifyBefore    = 4;
 }
 
 message Notification {
