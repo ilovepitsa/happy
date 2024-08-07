@@ -23,8 +23,8 @@ CREATE TABLE follows (
 );
 
 CREATE TABLE notification_template (
-    id serial,
-    template text
+    template text,
+    isEmail boolean
 );
 
 CREATE TABLE notification (

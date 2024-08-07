@@ -32,9 +32,10 @@ type (
 	}
 
 	Config struct {
-		App App     `yaml:"app"`
-		Net Network `yaml:"network"`
-		Log Logger  `yaml:"logger"`
+		App App      `yaml:"app"`
+		Net Network  `yaml:"network"`
+		Log Logger   `yaml:"logger"`
+		P   Postgres `yaml:"postgres"`
 	}
 )
 

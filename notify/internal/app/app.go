@@ -3,6 +3,7 @@ package app
 import (
 	"net"
 
+	"github.com/ilovepitsa/happy/notify/internal/repo"
 	"github.com/ilovepitsa/happy/notify/pkg/config"
 	log "github.com/sirupsen/logrus"
 
@@ -18,6 +19,12 @@ func Run(configPath string) error {
 	SetLogrusParams(cfg)
 
 	var opts []grpc.ServerOption
+
+	log.Info("Initializing repo...")
+	r, err := repo.NewRepo(cfg.P)
+	if err != nil {
+		log.Fatalf("error init repo %w", err)
+	}
 
 	grpcServer := grpc.NewServer(opts...)
 	log.Info("Starting listing tcp ", net.JoinHostPort(cfg.Net.Host, cfg.Net.Port))
