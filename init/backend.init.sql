@@ -31,5 +31,7 @@ CREATE TABLE notification (
     id serial,
     target integer references users(id),
     type notification_type, 
-    text text
+    text text not null,
+    date date not null,
+    send boolean not null
 );
