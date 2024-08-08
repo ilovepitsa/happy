@@ -1,3 +1,6 @@
+ SELECT 'CREATE DATABASE rutube'
+     WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'rutube')\gexec
+
 DROP TABLE IF EXISTS user_follow;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS users;

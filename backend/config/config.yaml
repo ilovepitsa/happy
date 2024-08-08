@@ -15,8 +15,8 @@ auth:
   port: "4578"
 
 postgres:
-  host: "postgresDB"
+  host: "postgres"
   port: "5432"
   user: "postgres"
-  password: "postgres"
-  db: "happy"
+  password: "12345"
+  db: "rutube"
