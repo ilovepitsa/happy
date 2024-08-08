@@ -8,7 +8,7 @@ import (
 )
 
 type Repo struct {
-	notifRepo *NotificationRepo
+	NotifRepo *NotificationRepo
 }
 
 func NewRepo(cfg config.Postgres) (*Repo, error) {
@@ -20,6 +20,6 @@ func NewRepo(cfg config.Postgres) (*Repo, error) {
 	nRepo := NewNotificationRepo(conntection)
 
 	return &Repo{
-		notifRepo: nRepo,
+		NotifRepo: nRepo,
 	}, nil
 }

@@ -3,6 +3,8 @@ package app
 import (
 	"net"
 
+	"github.com/ilovepitsa/happy/notify/api/notifier"
+	grpchandler "github.com/ilovepitsa/happy/notify/internal/handlers/grpcHandler"
 	"github.com/ilovepitsa/happy/notify/internal/repo"
 	"github.com/ilovepitsa/happy/notify/pkg/config"
 	log "github.com/sirupsen/logrus"
@@ -23,7 +25,7 @@ func Run(configPath string) error {
 	log.Info("Initializing repo...")
 	r, err := repo.NewRepo(cfg.P)
 	if err != nil {
-		log.Fatalf("error init repo %w", err)
+		log.Fatal("error init repo ", err)
 	}
 
 	grpcServer := grpc.NewServer(opts...)
@@ -32,6 +34,10 @@ func Run(configPath string) error {
 	if err != nil {
 		return err
 	}
+
+	notifierGrpc := grpchandler.NewNotificationServer(r.NotifRepo)
+
+	notifier.RegisterNotifierServer(grpcServer, notifierGrpc)
 
 	err = grpcServer.Serve(lis)
 	return err
