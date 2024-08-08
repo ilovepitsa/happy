@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"path"
 
 	"github.com/ilyakaznacheev/cleanenv"
@@ -23,6 +22,11 @@ type (
 		Report     bool   `yaml:"report"`
 	}
 
+	AuthService struct {
+		Host string `yaml:"host"`
+		Port string `yaml:"port"`
+	}
+
 	Postgres struct {
 		User     string `yaml:"user"`
 		Password string `yaml:"password"`
@@ -32,10 +36,11 @@ type (
 	}
 
 	Config struct {
-		App App      `yaml:"app"`
-		Net Network  `yaml:"network"`
-		Log Logger   `yaml:"logger"`
-		P   Postgres `yaml:"postgres"`
+		App   App         `yaml:"app"`
+		Net   Network     `yaml:"network"`
+		Log   Logger      `yaml:"logger"`
+		Auth  AuthService `yaml:"auth"`
+		Pstgr Postgres    `yaml:"postgres"`
 	}
 )
 
@@ -47,8 +52,4 @@ func NewConfig(cnfPath string) (*Config, error) {
 	}
 	return config, nil
 
-}
-
-func (p *Postgres) FormatDSN() string {
-	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", p.User, p.Password, p.Host, p.Port, p.Db)
 }

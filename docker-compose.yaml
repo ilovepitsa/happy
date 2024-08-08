@@ -1,0 +1,54 @@
+services:
+  auth:
+    build: ./auth
+    container_name: auth
+    ports:
+      - "4578:4578"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    container_name: redis
+    volumes:
+      - redis_data:/root/redis
+    environment:
+      - REDIS_PASSWORD=redis
+    ports:
+      - "6379:6379"
+
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - notify
+      - auth
+
+  notify:
+    build: ./notify
+    container_name: notify
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    container_name: postgres_backend
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - "./init/backend.init.sql:/docker-entrypoint-initdb.d/init.sql"
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./env/.env_postgres   
+
+
+
+volumes:
+  pg_data:
+  redis_data:

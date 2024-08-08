@@ -10,11 +10,11 @@ COPY --from=modules /go/pkg /go/pkg
 COPY . /app
 WORKDIR /app
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -o /bin/auth ./cmd
+    go build -o /bin/backend ./cmd
 
 
 # Step 3: Final
 FROM scratch
 COPY --from=builder /app/config /config
-COPY --from=builder /bin/auth /auth
-CMD ["/auth"]
+COPY --from=builder /bin/backend /backend
+CMD ["/backend"]

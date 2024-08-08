@@ -1,14 +1,18 @@
 app:
-  name: "notifier"
+  name: "backend"
 
 network:
   host: "0.0.0.0"
-  port: "8081"
+  port: "8080"
 
 logger:
   json_enable: false
   level: "debug"
   report: false
+
+auth:
+  host: "auth"
+  port: "4578"
 
 postgres:
   host: "postgres"

@@ -1,0 +1,17 @@
+app:
+  name: "auth service"
+
+network:
+  host: "0.0.0.0"
+  port: "4578"
+
+logger:
+  json_enable: false
+  level: "debug"
+  report: false
+
+redis:
+  host: "redis"
+  port: "6379"
+  pass: "redis"
+  ttl: 30m
